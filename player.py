@@ -24,7 +24,7 @@ class Player(CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
     
     def move(self, dt):
-        forward = pygame.Vector2(0, -1).rotate(self.rotation) #lines provided by boot.dev, they say i am here to lean
+        forward = pygame.Vector2(0, -1).rotate(self.rotation) #lines provided by boot.dev, they say i am here to learn
         self.position += forward * PLAYER_SPEED * dt          #coding and not vector-math
 
     def update(self, dt):
