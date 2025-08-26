@@ -33,6 +33,10 @@ def main():
             sprite.draw(screen)
         
         pygame.display.flip()
+        for sprite in asteroids:
+            if player.check_collision(sprite):
+                print("Game Over!")
+                raise SystemExit
         dt = clock.tick(60) / 1000
         
 
