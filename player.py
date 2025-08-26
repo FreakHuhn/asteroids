@@ -3,10 +3,12 @@ from circleshape import CircleShape
 import pygame
 
 
+
 class Player(CircleShape):
     def __init__(self, x, y, PLAYER_RADIUS):
         super().__init__(x, y, PLAYER_RADIUS)
         self.rotation = 0
+        self.shoot_cooldown = 0
 
     # Funktion für das Dreieck
     def triangle(self):
@@ -34,6 +36,7 @@ class Player(CircleShape):
 
     def update(self, dt):
         keys = pygame.key.get_pressed()
+        self.shoot_cooldown -= dt
 
         if keys[pygame.K_a]:
             self.rotate(-dt)
@@ -48,14 +51,17 @@ class Player(CircleShape):
             self.move(dt)
         
         if keys[pygame.K_SPACE]:
-            self.shoot()
+            if self.shoot_cooldown <= 0:
+                self.shoot_cooldown += PLAYER_SHOOT_COOLDOWN
+                self.shoot()
+            
             
 class Shot(CircleShape):
     def __init__(self, x, y, radius):
         super().__init__(x, y, radius)
                 
     def draw(self, screen):
-        pygame.draw.circle(screen, (255, 255, 255), (int(self.position.x), int(self.position.y)), self.radius, width=2)
+        pygame.draw.circle(screen, (255, 255, 255), (int(self.position.x), int(self.position.y)), self.radius)
         
     def update(self, dt):
         self.position += self.velocity * dt  
